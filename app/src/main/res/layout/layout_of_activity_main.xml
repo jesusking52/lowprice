@@ -1,0 +1,57 @@
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical" >
+
+<TextView
+    android:id="@+id/text01"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text=""
+    android:textSize="16dp" />
+
+<LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    >
+    <EditText
+        android:id="@+id/input01"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:hint="상품품번 OR 상품명 ..."
+        android:textSize="18dp"
+        >
+    </EditText>
+    <Button
+        android:id="@+id/requestBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="검색"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        >
+    </Button>
+</LinearLayout>
+
+<ScrollView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    >
+    <WebView
+        android:id="@+id/wvExample"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ff99ccee"
+        android:textColor="#ff0000ff"
+        android:textSize="12dp"
+        />
+
+</ScrollView>
+
+</LinearLayout>

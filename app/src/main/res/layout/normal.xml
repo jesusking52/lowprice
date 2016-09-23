@@ -1,0 +1,90 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+	android:padding="10dp"
+	>
+	
+	<ImageView
+		android:id="@+id/bmImage"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentTop="true"
+		android:gravity="center_horizontal"
+		android:text="최저가 등록"
+		android:textColor="#ffffffff"
+		android:textStyle="bold"
+		android:textSize="24dp"
+		android:background="@drawable/loading"
+
+		/>
+
+	<RelativeLayout 
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_centerInParent="true"
+	    android:padding="10dp"
+	    android:background="#aaffffff"
+	    >
+		<TextView 
+			android:id="@+id/usernameLabel"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:paddingTop="4dp"
+			android:text="검색어 : "
+			android:textColor="#ff222222"
+			android:textSize="18dp"
+			/>
+		<EditText
+			android:id="@+id/searchString"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_toRightOf="@id/usernameLabel" 
+			android:layout_alignBaseline="@id/usernameLabel"
+			android:layout_marginLeft="4dp"
+			/>
+		<TextView 
+			android:id="@+id/passwordLabel"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:paddingTop="16dp"
+			android:layout_below="@id/usernameLabel"
+			android:text="금액  : "
+			android:textColor="#ff222222"
+			android:textSize="18dp"
+			/>
+		<EditText 
+			android:id="@+id/price"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="4dp"
+			android:layout_toRightOf="@id/passwordLabel" 
+			android:layout_alignBaseline="@id/passwordLabel"
+			/>	
+		<Button 
+			android:id="@+id/btnSave"
+			android:layout_width="100dp"
+			android:layout_height="wrap_content"
+			android:layout_below="@id/passwordLabel"
+			android:layout_alignParentLeft="true"
+			android:layout_marginLeft="20dp"
+			android:layout_marginTop="16dp"
+			android:text="등록"
+			android:drawablePadding="2dp"
+			/>
+		<Button 
+			android:id="@+id/exitBtn"
+			android:layout_width="100dp"
+			android:layout_height="wrap_content"
+			android:layout_below="@id/passwordLabel"
+			android:layout_alignParentRight="true"
+			android:layout_marginRight="20dp"
+			android:layout_marginTop="16dp"
+			android:text="취소"
+			android:drawablePadding="2dp"
+			/>
+	</RelativeLayout>
+
+
+
+</RelativeLayout>
