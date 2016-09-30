@@ -51,7 +51,7 @@ android:orientation="vertical" >
         android:background="#ff99ccee"
         android:textColor="#ff0000ff"
         android:textSize="12dp"
-        android:visibility="visible"
+        android:visibility="invisible"
         />
 </ScrollView>
 
