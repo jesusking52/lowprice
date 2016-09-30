@@ -1,17 +1,18 @@
 package me.blog.netrance.android.title_from_webview;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -20,12 +21,11 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-
-import java.net.URL;
 
 /**
  * This example demonstrates how to read the title from a web view
@@ -34,6 +34,7 @@ import java.net.URL;
  * and it was implemented for this activity to read the title from the web view.
  *
  * @author Domone
+ * //검색어,가격,이미지,상품명,product or search,현제최소가
  */
 public class MainActivity extends AppCompatActivity {
     //main.xml
@@ -42,10 +43,14 @@ public class MainActivity extends AppCompatActivity {
     //normal.xml
     EditText searchString;
     EditText price;
+    EditText product;
     ImageView bmImage;
+    RadioGroup rdpGroup;
     Button btnSave;
+    ImageView mainImage;
     AlertDialog.Builder builder;
     SimpleData sData = new SimpleData();
+    String imgUrl="";
     private final Handler handler = new Handler();
     /**
      * 요청 코드 정의
@@ -65,11 +70,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void WebSetting(){
         wvExample = (WebView)findViewById(R.id.wvExample);
+
         input01 = (EditText)findViewById(R.id.input01);
         WebSettings wvExampleSettings = wvExample.getSettings();
         wvExampleSettings.setJavaScriptEnabled(true);
         wvExample.addJavascriptInterface(new AndroidBridge(), "LowPrice");
-        wvExample.setWebViewClient(new CustomWebViewClient(getSupportActionBar()));
+        //wvExample.setWebViewClient(new CustomWebViewClient(getSupportActionBar()));
         wvExample.setWebChromeClient(new WebChromeClient());
         wvExample.loadUrl("http://m.shopping.naver.com/search/all.nhn");
         builder = new AlertDialog.Builder(this);
@@ -77,52 +83,75 @@ public class MainActivity extends AppCompatActivity {
         Button requestBtn = (Button) findViewById(R.id.requestBtn);
         requestBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
                 String searchString = input01.getText().toString();
-                wvExample.loadUrl("http://m.shopping.naver.com/search/all.nhn?query=" + searchString + "&frm=NVSCPRO&sort=price_asc");
+                wvExample.loadUrl("http://m.shopping.naver.com/search/all.nhn?frm=NVSCPRO&sort=price_asc&query=" + searchString );
                 wvExample.setWebViewClient(new WebViewClient() {
                     @SuppressLint("SetJavascriptEnabled")
                     public void onPageFinished(WebView view, String url) {
                         view.loadUrl("javascript:function fnCRegist(obj){" +
-                                "if(confirm('해당 상품을 최저가 등록하시겠습니까?!')){" +
-                                "var price = jQuery(obj).parent().find('.price strong').text().replace('원','');" +
-                                "var img = jQuery(obj).parent().parent().find('img').attr('src');" +
-                                "window.LowPrice.Regist(price,img);" +
-                                "}" +
+                                    "if(confirm('해당 상품을 최저가 등록하시겠습니까?!')){" +
+                                    "var price = jQuery(obj).parent().find('.price strong').text().replace('원','');" +
+                                    "var img = jQuery(obj).parent().parent().find('img').attr('src');" +
+                                    "var pName = jQuery(obj).parent().find('.info_tit').text();" +
+                                    "window.LowPrice.Regist(price,img, pName);" +
+                                    "}" +
                                 "}"
                         );
-                        view.loadUrl("javascript:jQuery(\".txt_area\").append(\"<span class='list_btn' onclick='fnCRegist(this);' id='gg'><a href='#' class='zzim' id='ddd'>최저가 등록</a></span>\");");
+                        view.loadUrl("javascript:jQuery(\".list_btn\").remove();");//jQuery(".npay_point").remove();jQuery(".info_etc2").remove();
+                        view.loadUrl("javascript:jQuery(\".type_list .txt_area\").append(\"<span class='list_btn' onclick='fnCRegist(this);' id='gg'><a href='#' class='zzim' id='ddd' style='width:120px;line:0px;color:crimson;background-color: gold;font-family: sans-serif;' >최저가 등록</a></span>\");");
                     }
                 });
+                wvExample.setVisibility(View.VISIBLE);
+                //키보드 닫기
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(input01.getWindowToken(), 0);
+                Button requestBtn = (Button) findViewById(R.id.requestBtn);
+
             }
-
         });
-    }
-
-
-    protected Bitmap doInBackground(String urls) {
-        Bitmap bmp= null;
-        Bitmap bitmap2=null;
-        try {
-            URL url = new URL(urls);
-            bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-            bitmap2 = Bitmap.createScaledBitmap(bmp, 200, 90, false);
-
-        }catch (Exception ex)
-        {
-            ex.printStackTrace();
-        }
-        return  bitmap2;
+        input01.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                switch (keyCode) {
+                    case KeyEvent.KEYCODE_ENTER:
+                        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(input01.getWindowToken(), 0);
+                        Button requestBtn = (Button) findViewById(R.id.requestBtn);
+                        requestBtn.callOnClick();
+                        return true;
+                }
+                return false;
+            }
+        });
     }
 
     private android.app.AlertDialog createDialogBox(){
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
         builder.setTitle("안내");
-        builder.setMessage("등록하시겠습니까?");
+        //rdpGroup.get()
+        if(rdpGroup.getCheckedRadioButtonId()==R.id.rdoSearch) {
+            builder.setMessage("해당 검색명으로 [" +searchString.getText()+ "]로 최저가 등록하시겠습니까? \n" +
+            " 해당 검색어를 사용해 "+price.getText()+"원보다 낮은 가격 상품 존재시 알림 드립니다.");
+        }else{
+            builder.setMessage("해당 상품명으로 [" +product.getText()+ "]로 최저가 등록하시겠습니까? \n" +
+                    " 해당 검색어를 사용해 "+price.getText()+"원보다 낮은 가격 상품 존재시 알림 드립니다.");
+        }
         builder.setIcon(android.R.drawable.ic_dialog_alert);
         // 예 버튼 설정
         builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                String pData = input01.getText().toString()+","+price.getText().toString()+","+bmImage.getBackground().toString();
+                String pData="";
+                String strRdoGroup="";
+                if(rdpGroup.getCheckedRadioButtonId()==R.id.rdoSearch) {
+                    strRdoGroup="search";
+                }else
+                {
+                    strRdoGroup="product";
+                }
+                pData = input01.getText().toString().replace("\"","'").replace(","," ") + "," + price.getText().toString().replace("\"","").replace(",","") + "," + imgUrl+"," +product.getText().toString().replace("\"","'").replace(","," ")+","+strRdoGroup + "," + price.getText().toString().replace("\"","'").replace(",","") ;
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
                 SharedPreferences.Editor edit = prefs.edit();
                 JSONArray array = new JSONArray();
@@ -156,7 +185,6 @@ public class MainActivity extends AppCompatActivity {
                 //intent.putExtra(KEY_SIMPLE_DATA, bd1);
                 //intent.putExtra("bd1",bd1);",bd1);
                 startActivityForResult(intent, 0);
-
                 finish();
             }
         });
@@ -179,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
 
     private class AndroidBridge {
         @JavascriptInterface
-        public void Regist(final String arg, final String arg1) { // must be final
+        public void Regist(final String arg, final String arg1, final String arg2) { // must be final
 
             handler.post(new Runnable() {
                 @Override
@@ -188,16 +216,26 @@ public class MainActivity extends AppCompatActivity {
                     setContentView(R.layout.normal);
                     //조회 세팅
                     searchString = (EditText)findViewById(R.id.searchString);
+                    rdpGroup = (RadioGroup)findViewById(R.id.rdpGroup);
                     price = (EditText)findViewById(R.id.price);
                     searchString.setText(input01.getText());
+                    product =  (EditText)findViewById(R.id.product);
                     price.setText(arg);
+                    product.setText(arg2);
                     //이미지 세팅
                     bmImage =  (ImageView) findViewById(R.id.bmImage);
                     String sarg1= arg1.substring(0, arg1.indexOf("?"));
                     Toast.makeText(MainActivity.this
                             , sarg1
                             , Toast.LENGTH_SHORT).show();
-                    bmImage.setImageBitmap(doInBackground(sarg1));
+
+                    ImageLoaderTask imageLoaderTask = new ImageLoaderTask(
+                            bmImage,
+                            sarg1
+                    );
+                    imgUrl = sarg1.toString();
+                    imageLoaderTask.execute();
+
                     //번들 리스너
                     btnSave =  (Button) findViewById(R.id.btnSave);
                     btnSave.setOnClickListener(new View.OnClickListener() {
@@ -207,6 +245,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
                 }
+
             });
         }
     }

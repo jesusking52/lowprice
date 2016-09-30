@@ -1,7 +1,6 @@
 package me.blog.netrance.android.title_from_webview;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -43,8 +42,13 @@ public class IconTextView extends LinearLayout {
 		inflater.inflate(R.layout.listitem, this, true);
 
 		// Set Icon
+
 		mIcon = (ImageView) findViewById(R.id.iconItem);
-		mIcon.setImageDrawable(aItem.getIcon());
+		ImageLoaderTask imageLoaderTask = new ImageLoaderTask(
+				mIcon,
+				aItem.getIcon()
+		);
+		imageLoaderTask.execute();
 
 		// Set Text 01
 		mText01 = (TextView) findViewById(R.id.dataItem01);
@@ -81,10 +85,16 @@ public class IconTextView extends LinearLayout {
 	/**
 	 * set Icon
 	 *
-	 * @param icon
+	 * @param imgUrl
 	 */
-	public void setIcon(Drawable icon) {
-		mIcon.setImageDrawable(icon);
+	public void setIcon(String imgUrl) {
+
+		mIcon = (ImageView) findViewById(R.id.iconItem);
+		ImageLoaderTask imageLoaderTask = new ImageLoaderTask(
+				mIcon,
+				imgUrl
+		);
+		imageLoaderTask.execute();
 	}
 
 }

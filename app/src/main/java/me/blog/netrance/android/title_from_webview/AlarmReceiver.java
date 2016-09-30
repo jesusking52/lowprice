@@ -20,39 +20,28 @@ import org.jsoup.select.Elements;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Hashtable;
 
 
 public class AlarmReceiver extends BroadcastReceiver {
 
+    Context contextLocal;
+    Intent intentLocal;
     @Override
     public void onReceive(Context context, Intent intent) {
+        contextLocal = context;
+        intentLocal = intent;
 
+        // Thread로 웹서버에 접속
+        new Thread() {
+            public void run() {
+                isLowerThenBefore(contextLocal, intentLocal);
+            }
+        }.start();
 
-
-        if(isLowerThenBefore(context)) {
-            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
-                    .setSmallIcon(R.drawable.icon01)
-                    //Set the "ticker" text which is displayed in the status bar when the notification first arrives.
-                    .setContentTitle("제목")
-                    .setTicker("내용")
-                    .setContentText("내용")
-                    .setAutoCancel(true);
-            //Big Picture Style - Displays a bitmap up to 256 dp tall similar to a screenshot notification.
-            NotificationCompat.BigPictureStyle style = new NotificationCompat.BigPictureStyle();
-            style.setBigContentTitle("제목");
-            style.setSummaryText("내용");
-            //style.bigPicture(banner);
-            builder.setStyle(style);
-            builder.setContentIntent(pendingIntent);
-            builder.setDefaults(Notification.DEFAULT_VIBRATE);
-            builder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
-            NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.notify(0, builder.build());
-        }
     }
 
-    public boolean isLowerThenBefore(Context context){
+    public boolean isLowerThenBefore(Context context, Intent intent){
         boolean isNow = false;
         SharedPreferences prefs;
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -64,11 +53,60 @@ public class AlarmReceiver extends BroadcastReceiver {
         {
             try
             {
+                Hashtable<Integer,Integer> ht = new Hashtable();
+
                 array = new JSONArray(json);
                 for (int i = 0; i < array.length(); i++)
                 {
                     pdata = array.optString(i);
-                    request(pdata.split(",")[0],Integer.parseInt(pdata.split(",")[1]));
+                    String strProduct = pdata.split(",")[0];
+                    int beforePrice = Integer.parseInt(pdata.split(",")[1]);
+                    int nowPrice = GetNewPrice(strProduct,beforePrice);
+                    if(nowPrice < beforePrice){
+                        ht.put(i,nowPrice);
+                        //intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                        NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+                                .setSmallIcon(R.drawable.icon01)
+                                //Set the "ticker" text which is displayed in the status bar when the notification first arrives.
+                                .setTicker("현제 "+strProduct+"의 최저가는 ["+nowPrice+"]원 입니다.")
+                                .setContentTitle("등록하신 상품의 최저가가 갱신되었습니다.")
+                                .setContentText("현제가가 최종가가 아닐 경우 최저가를 갱신해 주십시오.")
+                                .setAutoCancel(true);
+                        //Big Picture Style - Displays a bitmap up to 256 dp tall similar to a screenshot notification.
+                        NotificationCompat.BigPictureStyle style = new NotificationCompat.BigPictureStyle();
+                        //style.setBigContentTitle("setBigContentTitle");
+                        //style.setSummaryText("setSummaryText");
+                        //style.bigPicture(banner);
+                        builder.setStyle(style);
+                        builder.setContentIntent(pendingIntent);
+                        builder.setDefaults(Notification.DEFAULT_VIBRATE);
+                        builder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+                        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                        notificationManager.notify(0, builder.build());
+                    }
+                }
+                //최신가 수정
+                for (int i = 0; i < array.length(); i++)
+                {
+                    if(ht.containsKey(i))
+                    {
+
+                        int newPrice = (Integer) ht.get(i);
+                        pdata = array.optString(i);
+                        String [] arrData = pdata.split(",");
+                        String newData = "";
+                        for(int j=0;j<arrData.length;j++){
+                            if(j>0)
+                                newData +=",";
+                            if(j==5)
+                                newData += newPrice;
+                            else
+                                newData += arrData[j];
+                        }
+                        array.remove(i);
+                        array.put(newData);
+                    }
                 }
                 edit.putString("favorite1", array.toString());
                 edit.commit();
@@ -81,26 +119,27 @@ public class AlarmReceiver extends BroadcastReceiver {
         return isNow;
     }
 
-    private String request(String name, int price) {
+    private int GetNewPrice(String name, int price) {
+        int nowPrice=0;
         StringBuilder output = new StringBuilder();
         try {
-            URL url = new URL("@Strings/searchUrl"+name);
+            URL url = new URL("http://m.shopping.naver.com/search/all.nhn?frm=NVSCPRO&sort=price_asc&query="+name);
             HttpURLConnection conn = (HttpURLConnection)url.openConnection();
             if (conn != null) {
-
-                Document document = Jsoup.connect("@Strings/searchUrl"+name).get();//rss 데이터 저장.
+                Document document = Jsoup.connect("http://m.shopping.naver.com/search/all.nhn?frm=NVSCPRO&sort=price_asc&query="+name).get();//rss 데이터 저장.
                 Elements elements = document.select(".price > strong");//item tag의 내용물 저장.
-
                 String strPrice = elements.get(0).text().replace("원","").replace(",","");
-                int iPrice = Integer.parseInt(strPrice);
+                nowPrice = Integer.parseInt(strPrice);
+
 
             }
         } catch(Exception ex) {
             Log.e("SampleHTTP", "Exception in processing response.", ex);
             ex.printStackTrace();
         }
-        return output.toString();
+        return nowPrice;
     }
+
 
 }
 

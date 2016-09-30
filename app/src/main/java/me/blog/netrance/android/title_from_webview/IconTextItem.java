@@ -14,7 +14,8 @@ public class IconTextItem {
 	 * Icon
 	 */
 	private Drawable mIcon;
-	
+
+	private String imgUrl;
 	/**
 	 * Data array
 	 */
@@ -39,18 +40,18 @@ public class IconTextItem {
 	/**
 	 * Initialize with icon and strings
 	 * 
-	 * @param icon
+	 * @param imgUrl
 	 * @param obj01
 	 * @param obj02
 	 * @param obj03
 	 */
-	public IconTextItem(Drawable icon, String obj01, String obj02, String obj03) {
-		mIcon = icon;
-		
-		mData = new String[3];
+	public IconTextItem(String imgUrl, String obj01, String obj02, String obj03, String obj04) {
+		this.imgUrl = imgUrl;
+		mData = new String[4];
 		mData[0] = obj01;
 		mData[1] = obj02;
 		mData[2] = obj03;
+		mData[3] = obj04;
 	}
 	
 	/**
@@ -110,8 +111,8 @@ public class IconTextItem {
 	 * 
 	 * @return
 	 */
-	public Drawable getIcon() {
-		return mIcon;
+	public String getIcon() {
+		return imgUrl;
 	}
 
 	/**

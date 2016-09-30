@@ -25,6 +25,7 @@ android:orientation="vertical" >
         android:layout_height="wrap_content"
         android:hint="상품품번 OR 상품명 ..."
         android:textSize="18dp"
+        android:nextFocusDown="@+id/requestBtn"
         >
     </EditText>
     <Button
@@ -39,8 +40,8 @@ android:orientation="vertical" >
 </LinearLayout>
 
 <ScrollView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:layout_marginTop="20dp"
     >
     <WebView
@@ -50,8 +51,8 @@ android:orientation="vertical" >
         android:background="#ff99ccee"
         android:textColor="#ff0000ff"
         android:textSize="12dp"
+        android:visibility="invisible"
         />
-
 </ScrollView>
 
 </LinearLayout>
