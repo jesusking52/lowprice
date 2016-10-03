@@ -34,7 +34,7 @@ public class IconTextView extends LinearLayout {
 	 */
 	private TextView mText03;
 
-	public IconTextView(Context context, IconTextItem aItem) {
+	public IconTextView(Context context, CustomWebViewClient.IconTextItem aItem) {
 		super(context);
 
 		// Layout Inflation

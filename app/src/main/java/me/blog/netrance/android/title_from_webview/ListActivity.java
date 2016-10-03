@@ -1,4 +1,6 @@
 package me.blog.netrance.android.title_from_webview;
+
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -16,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -48,7 +51,7 @@ public class ListActivity extends ActionBarActivity {
         // 아이템 데이터 만들기
         if(!getData())
         {
-            Intent intent = new Intent(getBaseContext(), MainActivity.class);
+            Intent intent = new Intent(getBaseContext(), SearchActivity.class);
             startActivityForResult(intent, 0);
         }
         // 리스트뷰에 어댑터 설정
@@ -59,7 +62,7 @@ public class ListActivity extends ActionBarActivity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                IconTextItem curItem = (IconTextItem) adapter.getItem(position);
+                CustomWebViewClient.IconTextItem curItem = (CustomWebViewClient.IconTextItem) adapter.getItem(position);
                 String[] curData = curItem.getData();
                 //Toast.makeText(getApplicationContext(), "Selected : " + curData[3], Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(getBaseContext(), ModifyActivity.class);
@@ -71,7 +74,7 @@ public class ListActivity extends ActionBarActivity {
         btnAdd = (Button) findViewById(R.id.btnAdd);
         btnAdd.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                Intent intent = new Intent(getBaseContext(), SearchActivity.class);
                 startActivityForResult(intent, 0);
             }
         });
@@ -81,7 +84,7 @@ public class ListActivity extends ActionBarActivity {
         Intent intentx = new Intent(getBaseContext(),  AlarmReceiver.class);
         PendingIntent pendingintent = PendingIntent.getBroadcast(getBaseContext(), 0, intentx, 0);
 
-        long period = 1000 * 60;//1분
+        long period = 1000 * 60*60*24;//하루
         long after = 1000 * 5;
         long t = SystemClock.elapsedRealtime();
 
@@ -119,7 +122,7 @@ public class ListActivity extends ActionBarActivity {
                     );
                     imageLoaderTask.execute();
 
-                    adapter.addItem(new IconTextItem(pdata.split(",")[2], dispName, pdata.split(",")[1]+"원", "현제가 : "+pdata.split(",")[5] + "원", pdata));
+                    adapter.addItem(new CustomWebViewClient.IconTextItem(pdata.split(",")[2], dispName, pdata.split(",")[1]+"원", "현제가 : "+pdata.split(",")[5] + "원", pdata));
                 }
                 isData= true;
             }

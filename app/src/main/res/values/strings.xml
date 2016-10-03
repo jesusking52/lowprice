@@ -2,5 +2,7 @@
     <string name="app_name">최저가 등록</string>
     <string name="action_settings">최저가 추가</string>
     <string name="searchUrl">http://m.shopping.naver.com/search/all.nhn?query=</string>
-
+    <string name="path_search">
+       M141,17 A9,9 0 1,1 142,16 L149,23
+    </string>
 </resources>

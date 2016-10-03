@@ -24,6 +24,13 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import static me.blog.netrance.android.title_from_webview.R.id.bmImage;
+import static me.blog.netrance.android.title_from_webview.R.id.btnSave;
+import static me.blog.netrance.android.title_from_webview.R.id.price;
+import static me.blog.netrance.android.title_from_webview.R.id.product;
+import static me.blog.netrance.android.title_from_webview.R.id.rdpGroup;
+import static me.blog.netrance.android.title_from_webview.R.id.searchString;
+
 /**
  * This example demonstrates how to read the title from a web view
  * and update it to the title of this action bar.
@@ -33,63 +40,19 @@ import org.json.JSONException;
  * @author Domone
  * //검색어,가격,이미지,상품명,product or search,현제최소가
  */
-public class MainActivity extends Activity {
-    //main.xml
-    WebView wvExample;
-    //normal.xml
-    EditText searchString;
-    String strSearchString;
-    EditText price;
-    EditText product;
-    ImageView bmImage;
-    RadioGroup rdpGroup;
-    Button btnSave;
-    AlertDialog.Builder builder;
-    String imgUrl="";
-    private final Handler handler = new Handler();
+public class RegistActivity extends Activity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_of_activity_main);
-        builder = new AlertDialog.Builder(this);
-        getParameter();
-        WebSetting();
-    }
+/*
+    public class AndroidBridge {
+        EditText price;
+        EditText product;
+        ImageView bmImage;
+        RadioGroup rdpGroup;
+        Button btnSave;
+        AlertDialog.Builder builder;
+        String imgUrl="";
+        private final Handler handler = new Handler();
 
-    private  void getParameter(){
-        Intent intent = getIntent();
-        strSearchString = intent.getStringExtra("searchString");
-    }
-
-    private void WebSetting(){
-        wvExample = (WebView)findViewById(R.id.wvExample);
-        WebSettings wvExampleSettings = wvExample.getSettings();
-        wvExampleSettings.setJavaScriptEnabled(true);
-        wvExample.addJavascriptInterface(new AndroidBridge(), "LowPrice");
-        wvExample.setWebChromeClient(new WebChromeClient());
-
-        wvExample.loadUrl("http://m.shopping.naver.com/search/all.nhn?frm=NVSCPRO&sort=price_asc&query=" + strSearchString );
-        wvExample.setWebViewClient(new WebViewClient() {
-            @SuppressLint("SetJavascriptEnabled")
-            public void onPageFinished(WebView view, String url) {
-                view.loadUrl("javascript:function fnCRegist(obj){" +
-                        "if(confirm('해당 상품을 최저가 등록하시겠습니까?!')){" +
-                        "var price = jQuery(obj).parent().find('.price strong').text().replace('원','');" +
-                        "var img = jQuery(obj).parent().parent().find('img').attr('src');" +
-                        "var pName = jQuery(obj).parent().find('.info_tit').text();" +
-                        "window.LowPrice.Regist(price,img, pName);" +
-                        "}" +
-                        "}"
-                );
-                view.loadUrl("javascript:jQuery(\".list_btn\").remove();");//jQuery(".npay_point").remove();jQuery(".info_etc2").remove();
-                view.loadUrl("javascript:jQuery(\".type_list .txt_area\").append(\"<span class='list_btn' onclick='fnCRegist(this);' id='gg'><a href='#' class='zzim' id='ddd' style='width:120px;line:0px;color:crimson;background-color: gold;font-family: sans-serif;' >최저가 등록</a></span>\");");
-            }
-        });
-
-    }
-
-    private class AndroidBridge {
         @JavascriptInterface
         public void Regist(final String arg, final String arg1, final String arg2) { // must be final
 
@@ -99,17 +62,17 @@ public class MainActivity extends Activity {
 
                     setContentView(R.layout.normal);
                     //조회 세팅
-                    searchString = (EditText)findViewById(R.id.searchString);
-                    rdpGroup = (RadioGroup)findViewById(R.id.rdpGroup);
-                    price = (EditText)findViewById(R.id.price);
+                    searchString = (EditText)findViewById(searchString);
+                    rdpGroup = (RadioGroup)findViewById(rdpGroup);
+                    price = (EditText)findViewById(price);
                     searchString.setText(strSearchString);
-                    product =  (EditText)findViewById(R.id.product);
+                    product =  (EditText)findViewById(product);
                     price.setText(arg);
                     product.setText(arg2);
                     //이미지 세팅
-                    bmImage =  (ImageView) findViewById(R.id.bmImage);
+                    bmImage =  (ImageView) findViewById(bmImage);
                     String sarg1= arg1.substring(0, arg1.indexOf("?"));
-                    Toast.makeText(MainActivity.this
+                    Toast.makeText(RegistActivity.this
                             , sarg1
                             , Toast.LENGTH_SHORT).show();
 
@@ -121,7 +84,7 @@ public class MainActivity extends Activity {
                     imageLoaderTask.execute();
 
                     //번들 리스너
-                    btnSave =  (Button) findViewById(R.id.btnSave);
+                    btnSave =  (Button) findViewById(btnSave);
                     btnSave.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
                             android.app.AlertDialog dialog = createDialogBox();
@@ -158,7 +121,7 @@ public class MainActivity extends Activity {
                     strRdoGroup="product";
                 }
                 pData = strSearchString.replace("\"","'").replace(","," ") + "," + price.getText().toString().replace("\"","").replace(",","") + "," + imgUrl+"," +product.getText().toString().replace("\"","'").replace(","," ")+","+strRdoGroup + "," + price.getText().toString().replace("\"","'").replace(",","") ;
-                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(RegistActivity.this);
                 SharedPreferences.Editor edit = prefs.edit();
                 JSONArray array = new JSONArray();
                 String json = prefs.getString("favorite1", null);
@@ -183,8 +146,8 @@ public class MainActivity extends Activity {
                     edit.commit();
                 }
 
-                Toast.makeText(MainActivity.this
-                        , "최저가가 등록되었습니다."
+                Toast.makeText(RegistActivity.this
+                        , "즐겨찾기가 저장되었습니다."
                         , Toast.LENGTH_SHORT).show();
                 // 액티비티를 띄워주도록 startActivityForResult() 메소드를 호출합니다.
                 Intent intent = new Intent(getBaseContext(), ListActivity.class);
@@ -208,6 +171,6 @@ public class MainActivity extends Activity {
         android.app.AlertDialog dialog = builder.create();
         return dialog;
     }
-
+    */
 
 }

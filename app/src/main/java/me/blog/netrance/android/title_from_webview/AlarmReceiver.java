@@ -65,14 +65,22 @@ public class AlarmReceiver extends BroadcastReceiver {
                     if(nowPrice < beforePrice){
                         ht.put(i,nowPrice);
                         //intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                    }
+                }
+                //최신가 수정
+                for (int i = 0; i < array.length(); i++)
+                {
+                    if(i==0){
+                        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, new Intent(context, ListActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
                         NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                                 .setSmallIcon(R.drawable.icon01)
                                 //Set the "ticker" text which is displayed in the status bar when the notification first arrives.
-                                .setTicker("현제 "+strProduct+"의 최저가는 ["+nowPrice+"]원 입니다.")
+                                .setTicker("최저가가 개신 되었습니다. 입니다. 확인해 보세요.")
                                 .setContentTitle("등록하신 상품의 최저가가 갱신되었습니다.")
                                 .setContentText("현제가가 최종가가 아닐 경우 최저가를 갱신해 주십시오.")
-                                .setAutoCancel(true);
+                                .setAutoCancel(true)
+                                .setContentIntent(pendingIntent);
                         //Big Picture Style - Displays a bitmap up to 256 dp tall similar to a screenshot notification.
                         NotificationCompat.BigPictureStyle style = new NotificationCompat.BigPictureStyle();
                         //style.setBigContentTitle("setBigContentTitle");
@@ -85,10 +93,6 @@ public class AlarmReceiver extends BroadcastReceiver {
                         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
                         notificationManager.notify(0, builder.build());
                     }
-                }
-                //최신가 수정
-                for (int i = 0; i < array.length(); i++)
-                {
                     if(ht.containsKey(i))
                     {
 

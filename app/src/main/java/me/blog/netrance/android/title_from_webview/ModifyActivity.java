@@ -37,20 +37,15 @@ public class ModifyActivity extends AppCompatActivity {
     ImageView bmImage;
     Button btnSave;
     Button exitBtn;
+    Button buyBtn;
+    Button btnReset;
     AlertDialog.Builder builder;
     RadioButton rdoSearch;
     RadioButton rdoProduct;
     String keyData;
     String nowPrice;
     String imgUrl;
-    /**
-     * 요청 코드 정의
-     */
-    public static final int REQUEST_CODE_LIST = 1001;
-    /**
-     * 부가 데이터의 키 값 정의
-     */
-    public static final String KEY_SIMPLE_DATA = "data";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,10 +59,12 @@ public class ModifyActivity extends AppCompatActivity {
         rdoSearch = (RadioButton)  findViewById(R.id.rdoSearch);
         btnSave =  (Button) findViewById(R.id.btnSave);
         exitBtn =  (Button) findViewById(R.id.exitBtn);
+        btnReset =  (Button) findViewById(R.id.btnReset);
+        buyBtn =  (Button) findViewById(R.id.buyBtn);
         exitBtn.setText("삭제");
         Intent intent = getIntent();
         keyData = intent.getStringExtra("data");
-
+        btnSave.setText("수정");
         getData(keyData);
         btnSave.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -76,10 +73,30 @@ public class ModifyActivity extends AppCompatActivity {
             }
         });
 
+        btnReset.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                price.setText(nowPrice);
+                Toast.makeText(ModifyActivity.this
+                        , "최저가가 갱신되었습니다."
+                        , Toast.LENGTH_SHORT).show();
+                btnSave.callOnClick();
+            }
+        });
+
         exitBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 android.app.AlertDialog dialog = createDialogBox2();
                 dialog.show();
+            }
+        });
+        buyBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                if(rdoSearch.isChecked())
+                    intent.putExtra("searchString", searchString.getText().toString());
+                else
+                    intent.putExtra("searchString", product.getText().toString());
+                startActivityForResult(intent, 0);
             }
         });
     }
@@ -194,7 +211,7 @@ public class ModifyActivity extends AppCompatActivity {
                 }
 
                 Toast.makeText(ModifyActivity.this
-                        , "즐겨찾기가 저장되었습니다."
+                        , "최저가가 수정되었습니다."
                         , Toast.LENGTH_SHORT).show();
                 // 액티비티를 띄워주도록 startActivityForResult() 메소드를 호출합니다.
                 Intent intent = new Intent(getBaseContext(), ListActivity.class);

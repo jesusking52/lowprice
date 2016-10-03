@@ -18,17 +18,17 @@ public class IconTextListAdapter extends BaseAdapter {
 
 	private Context mContext;
 
-	private List<IconTextItem> mItems = new ArrayList<IconTextItem>();
+	private List<CustomWebViewClient.IconTextItem> mItems = new ArrayList<CustomWebViewClient.IconTextItem>();
 
 	public IconTextListAdapter(Context context) {
 		mContext = context;
 	}
 
-	public void addItem(IconTextItem it) {
+	public void addItem(CustomWebViewClient.IconTextItem it) {
 		mItems.add(it);
 	}
 
-	public void setListItems(List<IconTextItem> lit) {
+	public void setListItems(List<CustomWebViewClient.IconTextItem> lit) {
 		mItems = lit;
 	}
 
