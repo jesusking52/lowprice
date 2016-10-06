@@ -78,7 +78,8 @@ public class MainActivity extends Activity {
                         "var price = jQuery(obj).parent().find('.price strong').text().replace('원','');" +
                         "var img = jQuery(obj).parent().parent().find('img').attr('src');" +
                         "var pName = jQuery(obj).parent().find('.info_tit').text();" +
-                        "window.LowPrice.Regist(price,img, pName);" +
+                        "var searchString = $(\"input[name='query']\").val();" +
+                        "window.LowPrice.Regist(price,img, pName, searchString);" +
                         "}" +
                         "}"
                 );
@@ -91,18 +92,18 @@ public class MainActivity extends Activity {
 
     private class AndroidBridge {
         @JavascriptInterface
-        public void Regist(final String arg, final String arg1, final String arg2) { // must be final
+        public void Regist(final String arg, final String arg1, final String arg2, final String search) { // must be final
 
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-
+                    strSearchString = search;
                     setContentView(R.layout.normal);
                     //조회 세팅
                     searchString = (EditText)findViewById(R.id.searchString);
                     rdpGroup = (RadioGroup)findViewById(R.id.rdpGroup);
                     price = (EditText)findViewById(R.id.price);
-                    searchString.setText(strSearchString);
+                    searchString.setText(search);
                     product =  (EditText)findViewById(R.id.product);
                     price.setText(arg);
                     product.setText(arg2);

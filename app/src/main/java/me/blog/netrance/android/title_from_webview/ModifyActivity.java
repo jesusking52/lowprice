@@ -39,6 +39,7 @@ public class ModifyActivity extends AppCompatActivity {
     Button exitBtn;
     Button buyBtn;
     Button btnReset;
+    Button listBtn;
     AlertDialog.Builder builder;
     RadioButton rdoSearch;
     RadioButton rdoProduct;
@@ -61,6 +62,7 @@ public class ModifyActivity extends AppCompatActivity {
         exitBtn =  (Button) findViewById(R.id.exitBtn);
         btnReset =  (Button) findViewById(R.id.btnReset);
         buyBtn =  (Button) findViewById(R.id.buyBtn);
+        listBtn =  (Button) findViewById(R.id.listBtn);
         exitBtn.setText("삭제");
         Intent intent = getIntent();
         keyData = intent.getStringExtra("data");
@@ -70,6 +72,13 @@ public class ModifyActivity extends AppCompatActivity {
             public void onClick(View v) {
                 android.app.AlertDialog dialog = createDialogBox();
                 dialog.show();
+            }
+        });
+
+        listBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), ListActivity.class);
+                startActivityForResult(intent, 0);
             }
         });
 
