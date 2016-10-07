@@ -86,6 +86,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                             .setContentTitle("등록하신 상품의 최저가가 갱신되었습니다.")
                             .setContentText("현제가가 최종가가 아닐 경우 최저가를 갱신해 주십시오.")
                             .setAutoCancel(true)
+
                             .setContentIntent(pendingIntent);
                     //Big Picture Style - Displays a bitmap up to 256 dp tall similar to a screenshot notification.
                     NotificationCompat.BigPictureStyle style = new NotificationCompat.BigPictureStyle();

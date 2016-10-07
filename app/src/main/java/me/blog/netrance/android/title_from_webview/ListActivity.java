@@ -86,7 +86,7 @@ public class ListActivity extends ActionBarActivity {
         Intent intentx = new Intent(getBaseContext(),  AlarmReceiver.class);
         PendingIntent pendingintent = PendingIntent.getBroadcast(getBaseContext(), 0, intentx, 0);
 
-        long period = 1000 * 60*60*24;//하루
+        long period = 1000 * 60*60*1;//하루에 두번
         long t = SystemClock.elapsedRealtime();
 
         Calendar cal = Calendar.getInstance();
