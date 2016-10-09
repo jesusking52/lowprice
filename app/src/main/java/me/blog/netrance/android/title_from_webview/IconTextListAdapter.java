@@ -1,6 +1,8 @@
 package me.blog.netrance.android.title_from_webview;
 
+import android.app.Activity;
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -17,7 +19,6 @@ import java.util.List;
 public class IconTextListAdapter extends BaseAdapter {
 
 	private Context mContext;
-
 	private List<CustomWebViewClient.IconTextItem> mItems = new ArrayList<CustomWebViewClient.IconTextItem>();
 
 	public IconTextListAdapter(Context context) {
@@ -66,6 +67,7 @@ public class IconTextListAdapter extends BaseAdapter {
 			itemView.setText(0, mItems.get(position).getData(0));
 			itemView.setText(1, mItems.get(position).getData(1));
 			itemView.setText(2, mItems.get(position).getData(2));
+
 		}
 		return itemView;
 	}

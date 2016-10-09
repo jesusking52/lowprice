@@ -33,6 +33,7 @@ public class IconTextView extends LinearLayout {
 	 * TextView 03
 	 */
 	private TextView mText03;
+	ImageLoader imageLoader;
 
 	public IconTextView(Context context, CustomWebViewClient.IconTextItem aItem) {
 		super(context);
@@ -44,12 +45,9 @@ public class IconTextView extends LinearLayout {
 		// Set Icon
 
 		mIcon = (ImageView) findViewById(R.id.iconItem);
-		ImageLoaderTask imageLoaderTask = new ImageLoaderTask(
-				mIcon,
-				aItem.getIcon()
-		);
-		imageLoaderTask.execute();
 
+		imageLoader = new ImageLoader(context);
+		imageLoader.DisplayImage(aItem.getIcon(), mIcon);
 		// Set Text 01
 		mText01 = (TextView) findViewById(R.id.dataItem01);
 		mText01.setText(aItem.getData(0));
@@ -88,13 +86,7 @@ public class IconTextView extends LinearLayout {
 	 * @param imgUrl
 	 */
 	public void setIcon(String imgUrl) {
-
-		mIcon = (ImageView) findViewById(R.id.iconItem);
-		ImageLoaderTask imageLoaderTask = new ImageLoaderTask(
-				mIcon,
-				imgUrl
-		);
-		imageLoaderTask.execute();
+		imageLoader.DisplayImage(imgUrl, mIcon);
 	}
 
 }

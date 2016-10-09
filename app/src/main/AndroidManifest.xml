@@ -3,8 +3,10 @@
     package="me.blog.netrance.android.title_from_webview">
 
     <!-- Permissions -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -32,9 +34,19 @@
         </activity>
 
         <receiver
-            android:name=".AlarmReceiver"
-            android:process=":remote" >
+            android:name=".AlarmReceiver" >
         </receiver>
+        <receiver
+            android:name=".BootReceiver"
+            android:enabled="true"
+            android:exported="false"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </receiver>
+        <service android:name=".AlarmService" />
     </application>
 
 </manifest>

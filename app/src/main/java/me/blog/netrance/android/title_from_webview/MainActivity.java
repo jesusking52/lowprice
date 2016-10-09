@@ -34,9 +34,8 @@ import org.json.JSONException;
  * //검색어,가격,이미지,상품명,product or search,현제최소가
  */
 public class MainActivity extends Activity {
-    //main.xml
+
     WebView wvExample;
-    //normal.xml
     EditText searchString;
     String strSearchString;
     EditText price;
@@ -113,13 +112,17 @@ public class MainActivity extends Activity {
                     Toast.makeText(MainActivity.this
                             , sarg1
                             , Toast.LENGTH_SHORT).show();
-
+/*
                     ImageLoaderTask imageLoaderTask = new ImageLoaderTask(
                             bmImage,
                             sarg1
                     );
-                    imgUrl = sarg1.toString();
                     imageLoaderTask.execute();
+                    */
+                    ImageLoader imageLoader = new ImageLoader(getBaseContext());
+                    imageLoader.DisplayImage(sarg1, bmImage);
+
+                    imgUrl = sarg1.toString();
 
                     //번들 리스너
                     btnSave =  (Button) findViewById(R.id.btnSave);

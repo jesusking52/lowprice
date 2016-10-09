@@ -27,9 +27,8 @@ import org.json.JSONException;
  * @author Domone
  */
 public class ModifyActivity extends AppCompatActivity {
-    //main.xml
+
     EditText input01;
-    //normal.xml
     EditText searchString;
     EditText price;
     EditText product;
@@ -50,7 +49,7 @@ public class ModifyActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.normal);
+        setContentView(R.layout.modify);
         bmImage =  (ImageView) findViewById(R.id.bmImage);
         price =  (EditText) findViewById(R.id.price);
         product =  (EditText) findViewById(R.id.product);
@@ -137,12 +136,12 @@ public class ModifyActivity extends AppCompatActivity {
                             rdoSearch.setChecked(true);
                         }
                         bmImage =  (ImageView) findViewById(R.id.bmImage);
-                        ImageLoaderTask imageLoaderTask = new ImageLoaderTask(
-                                bmImage,
-                                pdata.split(",")[2]
-                        );
+                        ImageLoader imageLoader = new ImageLoader(getBaseContext());
+                        imageLoader.DisplayImage(pdata.split(",")[2], bmImage);
+
                         imgUrl = pdata.split(",")[2].toString();
-                        imageLoaderTask.execute();
+
+
                         break;
                     }
                 }
