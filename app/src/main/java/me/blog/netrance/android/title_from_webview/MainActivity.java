@@ -46,7 +46,7 @@ public class MainActivity extends Activity {
     AlertDialog.Builder builder;
     String imgUrl="";
     private final Handler handler = new Handler();
-
+    String searchUrl="http://m.shopping.naver.com/search/all.nhn?pagingIndex=1&productSet=total&viewType=lst&sort=price_asc&showFilter=true&frm=NVSHSRC&selectedFilterTab=price&sps=Y&query=";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +68,7 @@ public class MainActivity extends Activity {
         wvExample.addJavascriptInterface(new AndroidBridge(), "LowPrice");
         wvExample.setWebChromeClient(new WebChromeClient());
 
-        wvExample.loadUrl("http://m.shopping.naver.com/search/all.nhn?frm=NVSCPRO&sort=price_asc&query=" + strSearchString );
+        wvExample.loadUrl(searchUrl + strSearchString );
         wvExample.setWebViewClient(new WebViewClient() {
             @SuppressLint("SetJavascriptEnabled")
             public void onPageFinished(WebView view, String url) {
@@ -79,14 +79,16 @@ public class MainActivity extends Activity {
                         "var pName = jQuery(obj).parent().find('.info_tit').text();" +
                         "var searchString = $(\"input[name='query']\").val();" +
                         "window.LowPrice.Regist(price,img, pName, searchString);" +
-                        "}" +
-                        "}"
+                            "}" +
+                        "};"
                 );
                 view.loadUrl("javascript:jQuery(\".list_btn\").remove();");//jQuery(".npay_point").remove();jQuery(".info_etc2").remove();
                 view.loadUrl("javascript:jQuery(\".type_list .txt_area\").append(\"<span class='list_btn' onclick='fnCRegist(this);' id='gg'><a href='#' class='zzim' id='ddd' style='width:120px;line:0px;color:crimson;background-color: gold;font-family: sans-serif;' >최저가 등록</a></span>\");");
+                //처리
+                //view.loadUrl("javascript:jQuery(\"input[name='query']\").keyup(function(e){alert(e.keyCode);});");//if(e.keyCode == 13){e.preventDefault();e.stopPropagation();location.href='"+searchUrl+"'+$(\"input[name='query']\").val();}});");//
+                view.loadUrl("javascript:$(\"input[name='query']\").keyup(function(e){if(e.keyCode == 13){e.preventDefault();e.stopPropagation();location.href='"+searchUrl+"'+$(\"input[name='query']\").val();}});");//
             }
         });
-
     }
 
     private class AndroidBridge {
