@@ -73,8 +73,15 @@ public class MainActivity extends Activity {
             @SuppressLint("SetJavascriptEnabled")
             public void onPageFinished(WebView view, String url) {
                 view.loadUrl("javascript:function fnCRegist(obj){" +
-                        "if(confirm('해당 상품을 최저가 등록하시겠습니까?!')){" +
+                        "var lowestPrice = jQuery('.price strong').eq(0).text().replace(',','').replace('원','');" +
                         "var price = jQuery(obj).parent().find('.price strong').text().replace('원','');" +
+                        "var message ='';" +
+                        "if(lowestPrice<price){" +
+                        "   message='해당 상품은 최저가 상품이 아닙니다. 등록하시겠습니까?'" +
+                        "}else{" +
+                        "   message='해당 상품을 최저가 등록하시겠습니까?!'" +
+                        "}" +
+                        "if(confirm(message)){" +
                         "var img = jQuery(obj).parent().parent().find('img').attr('src');" +
                         "var pName = jQuery(obj).parent().find('.info_tit').text();" +
                         "var searchString = $(\"input[name='query']\").val();" +
@@ -82,11 +89,14 @@ public class MainActivity extends Activity {
                             "}" +
                         "};"
                 );
-                view.loadUrl("javascript:jQuery(\".list_btn\").remove();");//jQuery(".npay_point").remove();jQuery(".info_etc2").remove();
+                view.loadUrl("javascript:jQuery(\".list_btn, .sr_opt_area, .sr_opt_depth, .tag_list \").remove();");//jQuery(".npay_point").remove();jQuery(".info_etc2").remove();
                 view.loadUrl("javascript:jQuery(\".type_list .txt_area\").append(\"<span class='list_btn' onclick='fnCRegist(this);' id='gg'><a href='#' class='zzim' id='ddd' style='width:120px;line:0px;color:crimson;background-color: gold;font-family: sans-serif;' >최저가 등록</a></span>\");");
                 //처리
                 //view.loadUrl("javascript:jQuery(\"input[name='query']\").keyup(function(e){alert(e.keyCode);});");//if(e.keyCode == 13){e.preventDefault();e.stopPropagation();location.href='"+searchUrl+"'+$(\"input[name='query']\").val();}});");//
                 view.loadUrl("javascript:$(\"input[name='query']\").keyup(function(e){if(e.keyCode == 13){e.preventDefault();e.stopPropagation();location.href='"+searchUrl+"'+$(\"input[name='query']\").val();}});");//
+                Toast.makeText(MainActivity.this
+                        , "원하는 상품이 가장 상위에 오도록 검색해 주셔야 정확한 알림을 드릴 수 있습니다."
+                        , Toast.LENGTH_LONG).show();
             }
         });
     }

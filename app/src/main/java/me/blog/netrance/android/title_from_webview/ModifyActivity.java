@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -32,6 +33,7 @@ public class ModifyActivity extends AppCompatActivity {
     EditText searchString;
     EditText price;
     EditText product;
+    TextView lowestPrice;
     RadioGroup rdoGroup;
     ImageView bmImage;
     Button btnSave;
@@ -62,6 +64,7 @@ public class ModifyActivity extends AppCompatActivity {
         btnReset =  (Button) findViewById(R.id.btnReset);
         buyBtn =  (Button) findViewById(R.id.buyBtn);
         listBtn =  (Button) findViewById(R.id.listBtn);
+        lowestPrice =  (TextView) findViewById(R.id.lowestPrice);
         exitBtn.setText("삭제");
         Intent intent = getIntent();
         keyData = intent.getStringExtra("data");
@@ -128,6 +131,7 @@ public class ModifyActivity extends AppCompatActivity {
                         searchString.setText(pdata.split(",")[0]);
                         product.setText(pdata.split(",")[3]);
                         nowPrice = pdata.split(",")[5];
+                        lowestPrice.setText("최저가 : "+nowPrice+"원");
                         if(pdata.split(",")[4].equals("product"))
                         {
                             rdoProduct.setChecked(true);

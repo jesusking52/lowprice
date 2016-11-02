@@ -38,7 +38,9 @@ public class ListActivity extends ActionBarActivity {
         listView1 = (ListView) findViewById(R.id.listView1);
         // 어댑터 객체 생성
         adapter = new IconTextListAdapter(this);
+
         AlarmSetting();
+
         // 아이템 데이터 만들기
         if(!getData())
         {
@@ -72,8 +74,15 @@ public class ListActivity extends ActionBarActivity {
     }
 
     private void AlarmSetting(){
-        Intent myIntent = new Intent(this, AlarmService.class);
-        startService(myIntent);
+        SharedPreferences prefs;
+        prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        SharedPreferences.Editor edit = prefs.edit();
+        JSONArray array = new JSONArray();
+        String json = prefs.getString("favorite1", null);
+        if (json == null) {
+            Intent myIntent = new Intent(this, AlarmService.class);
+            startService(myIntent);
+        }
     }
 
 
@@ -100,7 +109,7 @@ public class ListActivity extends ActionBarActivity {
                     if(dispName.length()>10)
                         dispName = dispName.substring(0,10)+"...";
 
-                    adapter.addItem(new CustomWebViewClient.IconTextItem(pdata.split(",")[2], dispName, pdata.split(",")[1]+"원", "현제가 : "+pdata.split(",")[5] + "원", pdata));
+                    adapter.addItem(new CustomWebViewClient.IconTextItem(pdata.split(",")[2], dispName, pdata.split(",")[1]+"원", "최저가 : "+pdata.split(",")[5] + "원", pdata));
                 }
                 isData= true;
             }

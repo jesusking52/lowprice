@@ -18,6 +18,7 @@
 	    android:layout_centerInParent="true"
 	    android:padding="10dp"
 	    android:background="#aaffffff"
+		android:id="@+id/center"
 	    >
 
 		<TextView
@@ -156,6 +157,27 @@
 			/>
 	</RelativeLayout>
 
-
-
+	<TextView
+		android:id="@+id/lowestPrice"
+		android:layout_weight="7"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/center"
+		android:paddingTop="5dp"
+		android:text="최저가 : "
+		android:layout_centerHorizontal="true"
+		android:layout_centerVertical="true"
+		android:textColor="#ccf88107"
+		android:textSize="30dp"
+		/>
+	<com.fsn.cauly.CaulyAdView
+		xmlns:app="http://schemas.android.com/apk/res/me.blog.netrance.android.title_from_webview"
+		android:id="@+id/xmladview"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		app:appcode="t1d4aWgM"
+		app:effect="TopSlide"
+		app:enableDefaultBannerAd="false"
+		/>
 </RelativeLayout>
