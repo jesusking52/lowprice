@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical">
+
+	<com.fsn.cauly.CaulyAdView
+		xmlns:app="http://schemas.android.com/apk/res/me.blog.netrance.android.title_from_webview"
+		android:id="@+id/xmladview"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		app:appcode="t1d4aWgM"
+		app:gps="off"
+		app:allowcall="true"
+		app:dynamicReloadInterval="true"
+		app:reloadInterval="20"
+		app:bannerHeight="Fixed"/>
+
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:gravity="center"
+		android:orientation="vertical">
+
+		<TextView
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent"
+			android:text="Cauly"
+			android:gravity="center"/>
+
+	</LinearLayout>
+
+</LinearLayout>
+
