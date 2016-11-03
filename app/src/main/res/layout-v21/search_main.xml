@@ -45,5 +45,14 @@
         android:alpha="0"
         android:onClick="animate"
         />
-
+    <com.fsn.cauly.CaulyAdView
+        xmlns:app="http://schemas.android.com/apk/res/me.blog.netrance.android.title_from_webview"
+        android:id="@+id/xmladview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:appcode="t1d4aWgM"
+        app:effect="TopSlide"
+        app:enableDefaultBannerAd="false"
+        />
 </FrameLayout>
