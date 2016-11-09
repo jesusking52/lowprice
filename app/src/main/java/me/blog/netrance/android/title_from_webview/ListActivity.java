@@ -47,7 +47,7 @@ public class ListActivity extends ActionBarActivity {
         //세로 고정
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_list);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFFFF0000));
+        //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFFFF0000));
         // 리스트뷰 객체 참조
         listView1 = (ListView) findViewById(R.id.listView1);
         // 어댑터 객체 생성

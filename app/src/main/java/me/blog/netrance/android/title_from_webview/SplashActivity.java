@@ -34,12 +34,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class SplashActivity extends Activity {
-
+    ImageView iv;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
+
+        iv = (ImageView) findViewById(R.id.iv);
+        //iv.setScaleType(ImageView.ScaleType.CENTER);
+        //iv.setScaleType(ImageView.ScaleType.CENTER);
         initialize();
+
     }
 
     private void initialize(){

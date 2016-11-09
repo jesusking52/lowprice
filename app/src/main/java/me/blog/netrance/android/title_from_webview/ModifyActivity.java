@@ -3,6 +3,7 @@ package me.blog.netrance.android.title_from_webview;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
@@ -102,12 +103,20 @@ public class ModifyActivity extends AppCompatActivity {
         });
         buyBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(), MainActivity.class);
-                if(rdoSearch.isChecked())
-                    intent.putExtra("searchString", searchString.getText().toString());
-                else
-                    intent.putExtra("searchString", product.getText().toString());
-                startActivityForResult(intent, 0);
+
+                //Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                String searchUrl="http://m.shopping.naver.com/search/all.nhn?pagingIndex=1&productSet=total&viewType=lst&sort=price_asc&showFilter=true&frm=NVSHSRC&selectedFilterTab=price&sps=Y&query=";
+                if(rdoSearch.isChecked()) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(searchUrl+searchString.getText().toString()));
+                    //intent.setPackage("com.android.chrome");
+                    startActivity(intent);
+                    finish();
+                }else {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(searchUrl+product.getText().toString()));
+                    //intent.setPackage("com.android.chrome");
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
     }
