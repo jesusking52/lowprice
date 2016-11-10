@@ -34,7 +34,7 @@ public class AlarmService extends Service {
         Intent intentx = new Intent(context,  AlarmReceiver.class);
         PendingIntent pendingintent = PendingIntent.getBroadcast(context, 0, intentx, 0);
 
-        long period = 1000 * 60* 60*24;//하루에 두번
+        long period = 1000 * 60* 60*12;//하루에 두번
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.HOUR_OF_DAY,8);
         cal.set(Calendar.MINUTE, 0);
