@@ -24,11 +24,12 @@
     tools:context=".SearchActivity"
    >
 
-    <ImageView
+    <ImageView android:layout_margin="0px"
         android:id="@+id/search"
         android:layout_gravity="center"
         android:layout_width="150dp"
         android:layout_height="24dp"
+        android:visibility="visible"
         android:src="@drawable/search_bar"
 
          />

@@ -13,7 +13,6 @@ import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -114,6 +113,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                 for (int i = 0; i < array.length(); i++)
                 {
                     pdata = array.optString(i);
+
                     if(ht.containsKey(pdata))
                     {
                         int newPrice = (Integer) ht.get(pdata);

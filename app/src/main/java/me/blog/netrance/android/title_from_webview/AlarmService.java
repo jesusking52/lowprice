@@ -1,27 +1,13 @@
 package me.blog.netrance.android.title_from_webview;
 
 import android.app.AlarmManager;
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.media.RingtoneManager;
 import android.os.IBinder;
-import android.preference.PreferenceManager;
-import android.support.v4.app.NotificationCompat;
-import android.util.Log;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
-import java.net.HttpURLConnection;
-import java.net.URL;
+
 import java.util.Calendar;
-import java.util.Hashtable;
 
 public class AlarmService extends Service {
 
