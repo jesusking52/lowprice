@@ -1,4 +1,4 @@
-package me.blog.netrance.android.title_from_webview;
+package shcompany.LowPrice2;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -167,7 +167,7 @@ public class ListActivity extends ActionBarActivity {
                 // Otherwise, set the URL to null.
                 Uri.parse("http://host/path"),
                 // TODO: Make sure this auto-generated app URL is correct.
-                Uri.parse("android-app://me.blog.netrance.android.title_from_webview/http/host/path")
+                Uri.parse("android-app://shcompany.title_from_webview/http/host/path")
         );
         AppIndex.AppIndexApi.start(client, viewAction);
     }
@@ -186,7 +186,7 @@ public class ListActivity extends ActionBarActivity {
                 // Otherwise, set the URL to null.
                 Uri.parse("http://host/path"),
                 // TODO: Make sure this auto-generated app URL is correct.
-                Uri.parse("android-app://me.blog.netrance.android.title_from_webview/http/host/path")
+                Uri.parse("android-app://shcompany.title_from_webview/http/host/path")
         );
         AppIndex.AppIndexApi.end(client, viewAction);
         client.disconnect();

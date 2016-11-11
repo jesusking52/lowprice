@@ -122,7 +122,7 @@
 			/>
 	</RelativeLayout>
 	<com.fsn.cauly.CaulyAdView
-		xmlns:app="http://schemas.android.com/apk/res/me.blog.netrance.android.title_from_webview"
+		xmlns:app="http://schemas.android.com/apk/res/shcompany.title_from_webview"
 		android:id="@+id/xmladview"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"

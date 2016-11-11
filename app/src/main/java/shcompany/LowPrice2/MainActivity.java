@@ -1,4 +1,4 @@
-package me.blog.netrance.android.title_from_webview;
+package shcompany.LowPrice2;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;

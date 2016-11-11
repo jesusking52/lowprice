@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package me.blog.netrance.android.title_from_webview;
+package shcompany.LowPrice2;
 
 import android.annotation.TargetApi;
 import android.app.Activity;

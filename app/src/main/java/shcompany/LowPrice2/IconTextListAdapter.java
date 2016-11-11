@@ -1,4 +1,4 @@
-package me.blog.netrance.android.title_from_webview;
+package shcompany.LowPrice2;
 
 import android.content.Context;
 import android.view.View;
