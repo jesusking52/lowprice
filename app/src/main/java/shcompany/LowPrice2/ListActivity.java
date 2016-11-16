@@ -15,6 +15,10 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.fsn.cauly.CaulyAdInfo;
+import com.fsn.cauly.CaulyAdInfoBuilder;
+import com.fsn.cauly.CaulyCloseAd;
+import com.fsn.cauly.CaulyCloseAdListener;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -33,6 +37,7 @@ public class ListActivity extends ActionBarActivity {
     ListView listView1;
     IconTextListAdapter adapter;
     Button btnAdd;
+    private CaulyCloseAd closeAd;         // 종료 광고 뷰
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -134,8 +139,17 @@ public class ListActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        menu.add(0,0,Menu.NONE, "최저가 추가");
+        menu.add(0,1,Menu.NONE, "종료");
+        //getMenuInflater().inflate(R.menu.menu_main, menu);
+
         return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu)
+    {
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
@@ -145,11 +159,47 @@ public class ListActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == 0) {
             btnAdd.callOnClick();
+            return true;
+        }else if (id == 1) {
+            //setContentView(R.layout.cauly);
+            //initClose();
+            finishAffinity();
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    // 종료 광고 초기화
+    public void initClose(){
+        CaulyAdInfo adInfo= new CaulyAdInfoBuilder("CAULY").build();       // CaulyAdInfo 생성, "CAULY"에 발급 ID 입력
+        closeAd=new CaulyCloseAd();                                        // CaulyCloseAd 생성
+        closeAd.setAdInfo(adInfo);                                         // CaulyAdView에 AdInfo 적용
+        closeAd.setButtonText("아니요","네");                             // 버튼 텍스트 사용자 지정
+        closeAd.setDescriptionText("종료 할까요?");                       // 질문 텍스트 사용자 지정
+        // 종료 광고 리스너 작성
+        closeAd.setCloseAdListener(new CaulyCloseAdListener() {
+            // 종료 광고 수신 시
+            @Override
+            public void onReceiveCloseAd(CaulyCloseAd caulyCloseAd, boolean b) {}
+            // 종료 광고가 보여질 시
+            @Override
+            public void onShowedCloseAd(CaulyCloseAd caulyCloseAd, boolean b) {}
+            // 종료 광고 수신 실패 시
+            @Override
+            public void onFailedToReceiveCloseAd(CaulyCloseAd caulyCloseAd, int i, String s) {}
+            // 종료 광고 왼쪽 버튼 클릭 시
+            @Override
+            public void onLeftClicked(CaulyCloseAd caulyCloseAd) {}
+            // 종료 광고 오른쪽 버튼 클릭 시
+            // 기본으로 오른쪽 버튼이 종료 버튼
+            @Override
+            public void onRightClicked(CaulyCloseAd caulyCloseAd) { finish(); }
+            // 광고 클릭으로 앱을 벗어 날 시
+            @Override
+            public void onLeaveCloseAd(CaulyCloseAd caulyCloseAd) {}
+        });
     }
 
     @Override

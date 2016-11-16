@@ -86,7 +86,7 @@ public class CaulyActivity extends Activity  {
     }
 
     // 종료 광고 초기화
-    private void initClose(){
+    public void initClose(){
         CaulyAdInfo adInfo= new CaulyAdInfoBuilder("CAULY").build();       // CaulyAdInfo 생성, "CAULY"에 발급 ID 입력
         closeAd=new CaulyCloseAd();                                        // CaulyCloseAd 생성
         closeAd.setAdInfo(adInfo);                                         // CaulyAdView에 AdInfo 적용

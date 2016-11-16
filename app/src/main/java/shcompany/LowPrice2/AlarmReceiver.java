@@ -69,7 +69,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                 {
                     pdata = array.optString(i);
                     String strSearch="";//= pdata.split(",")[0];
-                    String isProduct = pdata.split(",")[5];
+                    String isProduct = pdata.split(",")[4];
 
                     //검색어 세팅
                     if(isProduct.equals("product"))
