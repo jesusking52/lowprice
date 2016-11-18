@@ -79,7 +79,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
                     int beforePrice = Integer.parseInt(pdata.split(",")[1]);
                     int nowPrice = GetNewPrice(strSearch);
-                    if(nowPrice < beforePrice){
+                    if(nowPrice>0 && nowPrice < beforePrice){
                         ht.put(pdata,nowPrice);
                     }
                 }
