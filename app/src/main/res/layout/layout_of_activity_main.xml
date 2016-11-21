@@ -6,27 +6,23 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:orientation="vertical" >
 
-
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
-    <WebView
-        android:id="@+id/wvExample"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#ff99ccee"
-        android:textColor="#ff0000ff"
-        android:textSize="12dp"
-        />
-</ScrollView>
-
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="invisible"
+        android:visibility="visible"
         >
+        <com.fsn.cauly.CaulyAdView
+            xmlns:app="http://schemas.android.com/apk/res/shcompany.title_from_webview"
+            android:id="@+id/xmladview"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            app:appcode="t1d4aWgM"
+            app:effect="TopSlide"
+            app:enableDefaultBannerAd="false"
+            />
+        <!--
         <EditText
             android:id="@+id/input01"
             android:layout_width="250dp"
@@ -45,5 +41,22 @@ android:orientation="vertical" >
             android:textStyle="bold"
             >
         </Button>
+        -->
     </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <WebView
+            android:id="@+id/wvExample"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ff99ccee"
+            android:textColor="#ff0000ff"
+            android:textSize="12dp"
+            />
+    </ScrollView>
+
+
+
 </LinearLayout>

@@ -39,11 +39,20 @@
         android:layout_height="22dp"
         android:layout_gravity="center"
         android:background="@null"
-        android:textSize="12sp"
+        android:textSize="20sp"
         android:paddingStart="4dp"
         android:textColor="?android:colorAccent"
         android:alpha="0"
         android:onClick="animate"
         />
-
+    <com.fsn.cauly.CaulyAdView
+        xmlns:app="http://schemas.android.com/apk/res/shcompany.title_from_webview"
+        android:id="@+id/xmladview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:appcode="t1d4aWgM"
+        app:effect="TopSlide"
+        app:enableDefaultBannerAd="false"
+        />
 </FrameLayout>

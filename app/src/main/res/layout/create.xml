@@ -121,16 +121,7 @@
 			android:layout_toRightOf="@id/btnSave"
 			/>
 	</RelativeLayout>
-	<com.fsn.cauly.CaulyAdView
-		xmlns:app="http://schemas.android.com/apk/res/shcompany.title_from_webview"
-		android:id="@+id/xmladview"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:layout_alignParentBottom="true"
-		app:appcode="t1d4aWgM"
-		app:effect="TopSlide"
-		app:enableDefaultBannerAd="false"
-		/>
+
 
 
 </RelativeLayout>

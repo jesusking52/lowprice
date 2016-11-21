@@ -45,8 +45,10 @@
 				android:textSize="16dp"
 				android:textStyle="bold"
 				android:paddingRight="4dp"
-			    />    
- 		</RelativeLayout>   
-	</LinearLayout>    
-	
+			    />
+
+ 		</RelativeLayout>
+
+	</LinearLayout>
+
 </LinearLayout>  

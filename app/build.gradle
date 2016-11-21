@@ -5,11 +5,12 @@ android {
     buildToolsVersion "23.0.1"
 
     defaultConfig {
-        applicationId "me.blog.netrance.android.title_from_webview"
+        applicationId "shcompany.title_from_webview"
         minSdkVersion 19
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        versionCode 4
+        versionName "1.4"
+        generatedDensities = []
     }
     buildTypes {
         release {
@@ -22,6 +23,7 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:23.0.1'
-    compile files('libs/jsoup-1.9.2-sources.jar')
     compile files('libs/jsoup-1.9.2.jar')
+    compile files('libs/CaulySDK-3.4.11.jar')
+    compile 'com.google.android.gms:play-services-appindexing:8.1.0'
 }
